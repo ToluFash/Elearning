@@ -1,0 +1,48 @@
+{% block header %}
+    <div class="container">
+        <header class="blog-header lh-1 py-3  rounded bg-dark pl-5 pr-5">
+            <div class="row flex-nowrap justify-content-between align-items-center">
+                <div class="col-4 pt-1 ">
+                    <a class="text-white" href="#">Hello, {{ app.user.lastname}}</a>
+                </div>
+                <div class="col-4 d-flex justify-content-end align-items-center">
+                    <a class="btn btn-sm btn-outline-secondary" href="{{ path('app_logout') }}">Log Out</a>
+                </div>
+            </div>
+        </header>
+
+        <div class="nav-scroller py-1 mb-2 bg-light">
+            <nav class="navbar navbar-expand-lg bg-light">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="{{ path('app_student') }}">Dashboard</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">Courses</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">Assignments</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    School
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="#">Faculty</a></li>
+                                    <li><a class="dropdown-item" href="#">Department</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <form class="d-flex position-relative " role="search">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+{% endblock %}

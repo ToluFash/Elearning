@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+    {% if error %}
+        <div class="alert alert-danger" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+    <div class="form_wrapper">
+        <div class="form_container">
+            <div class="title_container">
+                <h2>Login</h2>
+            </div>
+            <div class="clearfix">
+                    <form action="{{ path('app_login') }}" method="post">
+                            <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
+                                    <input  type="text" id="username" name="_username" value="{{ last_username }}" placeholder="Username"/>
+                            </div>
+                            <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
+                                    <input type="password" id="password" name="_password"/>
+                            </div>
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                        <input class="button" type="submit" value="Login" />
+                    </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

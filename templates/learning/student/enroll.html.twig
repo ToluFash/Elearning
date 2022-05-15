@@ -1,0 +1,45 @@
+{% extends 'learning/index.html.twig' %}
+{% block title %}Hello StudentController!{% endblock %}
+
+
+{% block body %}
+    {{ include('learning/header.html.twig') }}
+    <main class="container">
+        {% if app.user.student %}
+
+            <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
+                <div class="col-md-6 px-0">
+                    <p class="lead my-3">You have already enrolled to the school, click the link below to start.</p>
+                    <p class="lead mb-0"><a href="{{ path('app_student') }}" class="text-white fw-bold">Dashboard</a></p>
+                </div>
+            </div>
+        {% else %}
+        <form action="{{ path('app_student_enroll') }}" method="post">
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Faculty</label>
+                <select class="form-select" aria-label="Default select example" aria-required="true" name="faculty">
+                    <option value="" selected>Select Faculty</option>
+                    {% for faculty in faculties %}
+                    <option value={{ faculty.id }}>{{  faculty.Name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Department</label>
+                <select class="form-select" aria-label="Default select example" aria-required="true" name="department">
+                    <option value="" selected>Select Department</option>
+                    {% for department in departments %}
+                    <option value={{ department.id }}>{{  department.Name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <input class="button" type="submit" value="Register" />
+        </form>
+
+        {% endif %}
+        <!--<div class="p-4 p-md-5 mb-4 text-white rounded bg-white"></div>-->
+
+
+    </main>
+
+{% endblock %}
