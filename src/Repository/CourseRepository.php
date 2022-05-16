@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Course;
+use App\Entity\Instructor;
 use App\Entity\Student;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -51,6 +52,17 @@ class CourseRepository extends ServiceEntityRepository
 
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery([':cid' => $course->getId(), ':sid' => $student->getId()])->fetchAllKeyValue();
+        return count($resultSet);
+    }
+    public function instructorEnrolled(Course $course, Instructor $instructor): bool{
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "
+            SELECT * FROM course_instructor
+            WHERE course_id=:cid AND instructor_id=:iid;
+            ";
+
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery([':cid' => $course->getId(), ':iid' => $instructor->getId()])->fetchAllKeyValue();
         return count($resultSet);
     }
 

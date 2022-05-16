@@ -1,10 +1,10 @@
 {% extends 'learning/index.html.twig' %}
 
-{% block title %}Hello StudentController!{% endblock %}
+{% block title %}Dashboard{% endblock %}
 
 
 {% block body %}
-    {{ include('learning/header.html.twig') }}
+    {{ include('learning/student/header.html.twig') }}
     <main class="container">
         {% if app.user.student %}
 
@@ -46,35 +46,6 @@
                     </ol>
 
 
-                </div>
-            </div>
-            <div class="row mb-2">
-                <div class="col-md-12">
-                    <h5 class="card-title">No Pending Notifications!</h5>
-                    <h3 class="mb-0">Notifications</h3>
-                    <ol class="list-group list-group-numbered">
-                        <li class="list-group-item d-flex justify-content-between align-items-start">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Subheading</div>
-                                Content for list item
-                            </div>
-                            <span class="badge bg-primary rounded-pill">14</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-start">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Subheading</div>
-                                Content for list item
-                            </div>
-                            <span class="badge bg-primary rounded-pill">14</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-start">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Subheading</div>
-                                Content for list item
-                            </div>
-                            <span class="badge bg-primary rounded-pill">14</span>
-                        </li>
-                    </ol>
                 </div>
             </div>
         {% else %}

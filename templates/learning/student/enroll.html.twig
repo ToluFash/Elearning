@@ -1,9 +1,9 @@
 {% extends 'learning/index.html.twig' %}
-{% block title %}Hello StudentController!{% endblock %}
+{% block title %}Enroll{% endblock %}
 
 
 {% block body %}
-    {{ include('learning/header.html.twig') }}
+    {{ include('learning/student/header.html.twig') }}
     <main class="container">
         {% if app.user.student %}
 

@@ -36,6 +36,7 @@ class Assignment
     #[ORM\Column(type: 'text', nullable: true)]
     private $file;
 
+
     public function __construct()
     {
         $this->submissions = new ArrayCollection();
@@ -147,6 +148,7 @@ class Assignment
 
         return $this;
     }
+
 
 
 }

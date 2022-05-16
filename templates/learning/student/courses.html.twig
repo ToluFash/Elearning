@@ -1,10 +1,10 @@
 {% extends 'learning/index.html.twig' %}
 
-{% block title %}Hello StudentController!{% endblock %}
+{% block title %}My Courses{% endblock %}
 
 
 {% block body %}
-    {{ include('learning/header.html.twig') }}
+    {{ include('learning/student/header.html.twig') }}
     <main class="container">
         {% if app.user.student %}
             <h2> My Courses</h2>

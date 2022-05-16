@@ -3,6 +3,8 @@
 Educational management system.
 
 # How to install dev
+1. Install Symfony binary, composer and node
+1. Clone repo
 1. Clone repo
 2. Create `.env.local` with your env vars
 3. `composer install`
@@ -21,6 +23,9 @@ Educational management system.
 
 # How to use
 
+1. Run `symfony server:start`
+1. Register an admin at `/register_admin697212`
 1. Register a user at `/register`
 1. Populate entities at `/admin`
 1. Access Student portal at  `/student`
+1. Access Instructor portal at  `/instructor`

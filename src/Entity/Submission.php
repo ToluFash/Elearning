@@ -25,6 +25,9 @@ class Submission
     #[ORM\Column(type: 'text')]
     private $filer;
 
+    #[ORM\Column(type: 'string', length: 10, nullable: true)]
+    private $grade;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +77,18 @@ class Submission
     public function setFiler(string $filer): self
     {
         $this->filer = $filer;
+
+        return $this;
+    }
+
+    public function getGrade(): ?string
+    {
+        return $this->grade;
+    }
+
+    public function setGrade(?string $grade): self
+    {
+        $this->grade = $grade;
 
         return $this;
     }

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Switch Template</title>
+    <title>University of Kakulta Portal</title>
     <link href="https://fonts.googleapis.com/css?family=Heebo:400,700|IBM+Plex+Sans:600" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('index/css/style.css') }}">
     {{ encore_entry_link_tags('app') }}
@@ -23,7 +23,14 @@
                 </button>
                 <div class=" d-flex position-relative collapse navbar-collapse " id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        {% if not app.user %}
+                        {% if app.user %}
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{{ path('app_student')}}">Student Portal</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{{ path('app_instructor')}}">Instructor Portal</a>
+                            </li>
+                        {% else %}
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="{{ path('app_login')}}">Login</a>
                         </li>

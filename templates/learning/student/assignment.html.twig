@@ -4,7 +4,7 @@
 
 
 {% block body %}
-    {{ include('learning/header.html.twig') }}
+    {{ include('learning/student/header.html.twig') }}
     <main class="container">
         {% if app.user.student %}
         {% if enrolled %}
@@ -48,11 +48,17 @@
 
                         <form method="post" action="{{ path('app_student_assignment_submit', {assignment: assignment.id}) }}">
                         <div class="p-3 col-md-6 mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">File:</label>
                             {% if submission%}
-                                <textarea name="file" type="text" class="form-control" id="exampleFormControlInput1">{{ submission.filer }}</textarea>
-                                <br/>
-                                <button class="btn btn-primary mb-3">Resubmit</button>
+                                {% if submission.grade %}
+                                    <button type="button" class="btn btn-primary">
+                                        Grade <span class="badge text-bg-secondary">{{ submission.grade }}</span>
+                                    </button>
+                                {%  else %}
+                                    <label for="exampleFormControlInput1" class="form-label">File:</label>
+                                    <textarea name="file" type="text" class="form-control" id="exampleFormControlInput1">{{ submission.filer }}</textarea>
+                                    <br/>
+                                    <button class="btn btn-primary mb-3">Resubmit</button>
+                                {% endif %}
                             {% else %}
                                 <textarea name="file" type="text" class="form-control" id="exampleFormControlInput1"></textarea>
                                 <br/>

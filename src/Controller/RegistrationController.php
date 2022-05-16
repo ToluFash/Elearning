@@ -30,8 +30,6 @@ class RegistrationController extends AbstractController
     public function register(LoggerInterface $logger, Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
 
-        $logger->error($request->request->get('username'));
-        $logger->error($request->request->get('student'));
         if (!is_null($request->request->get('username'))) {
             $user = new User();
             $user->setFirstName($request->request->get('username'));
@@ -64,6 +62,44 @@ class RegistrationController extends AbstractController
         }
 
         return $this->render('registration/register.html.twig', [
+        ]);
+    }
+
+    #[Route('/register_admin697212', name: 'app_register_admin')]
+    public function registerAdmin(LoggerInterface $logger, Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    {
+        if (!is_null($request->request->get('username'))) {
+            $user = new User();
+            $user->setFirstName($request->request->get('username'));
+            $user->setLastName($request->request->get('last_name'));
+            $user->setUsername($request->request->get('username'));
+            $user->setEmail($request->request->get('email'));
+            $user->setRoles( ['ROLE_ADMIN']);
+            // encode the plain password
+            $user->setPassword(
+            $userPasswordHasher->hashPassword(
+                    $user,
+                    $request->request->get('password')
+                )
+            );
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            // generate a signed url and email it to the user
+            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+                (new TemplatedEmail())
+                    ->from(new Address('elearner348563@gmail.com', 'ELearning Bot'))
+                    ->to($user->getEmail())
+                    ->subject('Please Confirm your Email')
+                    ->htmlTemplate('registration/confirmation_email.html.twig')
+            );
+            // do anything else you need here, like send an email
+
+            return $this->redirectToRoute('app_login');
+        }
+
+        return $this->render('registration/register_admin.html.twig', [
         ]);
     }
 
