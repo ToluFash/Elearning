@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Assignment;
+use App\Entity\Course;
 use App\Entity\Student;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -53,16 +54,9 @@ class AssignmentRepository extends ServiceEntityRepository
                 JOIN assignment a on cs.course_id = a.course_id
             WHERE student_id = :id;
             ';
-
-            try{
-                $stmt = $conn->prepare($sql);
-                $resultSet = $stmt->executeQuery(['id' => $student->getId()]);
-                return $this->findBy(['id', $resultSet->fetchAllKeyValue()]);
-            }
-            catch (\Throwable $e){
-                $this->logger->error($e->getTraceAsString());
-            }
-            return null;
+            $stmt = $conn->prepare($sql);
+            $resultSet = $stmt->executeQuery(['id' => $student->getId()]);
+            return $this->findBy(['id'=> $resultSet->fetchFirstColumn()]);
     }
 
 

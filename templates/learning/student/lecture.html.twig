@@ -1,0 +1,74 @@
+{% extends 'learning/index.html.twig' %}
+
+{% block title %}Hello StudentController!{% endblock %}
+
+
+{% block body %}
+    {{ include('learning/header.html.twig') }}
+    <main class="container">
+        {% if app.user.student %}
+        {% if enrolled %}
+            <h2> {{ lecture.title }}</h2>
+            <div class="list-group">
+                <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark " style="height: 90vh">
+                    <div class="container-fluid" style="height: 100%">
+                        <div data-vjs-player >
+                        <video id="lectureVideo" class="video-js"
+                               data-setup=
+                        '{"controls": true,
+                         "autoplay": false,
+                          "preload": "auto",
+                          "fill": true
+                          }'>
+                        <source src="{{ lecture.video }}" >
+                        </video>
+                        </div>
+                      </div>
+                </div>
+            </div>
+            <div class="col-md-6 px-0">
+                <h1 class="display-4">Lecture Information</h1>
+                <p class="lead my-3">{{ lecture.description }}</p>
+            </div>
+            <div class="accordion" id="accordionFile" style="height: 300px">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingFile">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFile" aria-expanded="true" aria-controls="collapseFile">
+                            Downloads
+                        </button>
+                    </h2>
+                    <div id="collapseFile" class="accordion-collapse collapse show" aria-labelledby="headingFile" data-bs-parent="#accordionFile">
+
+                        <ol class="list-group ">
+                            {% if lecture.file %}
+                                <a href="{{ lecture.file }}" class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">Lecture Resources</div>
+                                    </div>
+                                </a>
+                                {% else %}
+                                <p class="ms-2 me-auto">No Downloads Available!</p>
+                            {% endif %}
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+        <form method="post" action="{{ path('app_student_course_enroll', {course: lecture.courseweek.course.id}) }}">
+            <button class="btn btn-primary mb-3">Enroll</button>
+        </form>
+        {% endif %}
+        {% else %}
+            <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
+                <div class="col-md-6 px-0">
+                    <p class="lead my-3">You haven't enrolled as a student, click the link below to start.</p>
+                    <p class="lead mb-0"><a href="{{ path('app_student_enroll') }}" class="text-white fw-bold">Enroll</a></p>
+                </div>
+            </div>
+        {% endif %}
+        <!--<div class="p-4 p-md-5 mb-4 text-white rounded bg-white"></div>-->
+
+
+    </main>
+
+{% endblock %}

@@ -19,6 +19,9 @@ class DepartmentCrudController extends AbstractCrudController
         yield 'name';
         yield AssociationField::new('faculty')
             ->setFormTypeOption('choice_label', 'name')
-            ->setFormTypeOption('by_reference', 'id');;
+            ->setFormTypeOption('by_reference', 'id');
+        yield AssociationField::new('CourseHead')
+            ->setFormTypeOption('choice_label', 'name')
+            ->setFormTypeOption('by_reference', 'id');
     }
 }

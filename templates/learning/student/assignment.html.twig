@@ -1,0 +1,86 @@
+{% extends 'learning/index.html.twig' %}
+
+{% block title %}{{ assignment.title }}{% endblock %}
+
+
+{% block body %}
+    {{ include('learning/header.html.twig') }}
+    <main class="container">
+        {% if app.user.student %}
+        {% if enrolled %}
+        <h2> {{ assignment.title }}</h2>
+        <div class="list-group">
+            <div class="col-md-6 px-0">
+                <h3 >Information</h3>
+                <p class="lead my-3">{{ assignment.description }}</p>
+            </div>
+            <div class="accordion" id="accordionFile" style="height: 100px">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingFile">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFile" aria-expanded="true" aria-controls="collapseFile">
+                            Downloads
+                        </button>
+                    </h2>
+                    <div id="collapseFile" class="accordion-collapse collapse show" aria-labelledby="headingFile" data-bs-parent="#accordionFile">
+
+                        <ol class="list-group ">
+                            {% if assignment.file %}
+                                <a href="{{ assignment.file }}" class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">Assignment Resources</div>
+                                    </div>
+                                </a>
+                            {% else %}
+                                <p class="ms-2 me-auto">No Downloads Available!</p>
+                            {% endif %}
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion" id="accordionSubmit" style="height: 100px">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingSubmit">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSubmit" aria-expanded="true" aria-controls="collapseSubmit">
+                            Submission
+                        </button>
+                    </h2>
+                    <div id="collapseSubmit" class="accordion-collapse collapse show" aria-labelledby="headingSubmit" data-bs-parent="#accordionSubmit">
+
+                        <form method="post" action="{{ path('app_student_assignment_submit', {assignment: assignment.id}) }}">
+                        <div class="p-3 col-md-6 mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">File:</label>
+                            {% if submission%}
+                                <textarea name="file" type="text" class="form-control" id="exampleFormControlInput1">{{ submission.filer }}</textarea>
+                                <br/>
+                                <button class="btn btn-primary mb-3">Resubmit</button>
+                            {% else %}
+                                <textarea name="file" type="text" class="form-control" id="exampleFormControlInput1"></textarea>
+                                <br/>
+                                <button class="btn btn-primary mb-3">Submit</button>
+                            {% endif %}
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <form method="post" action="{{ path('app_student_course_enroll', {course: assignment.courseweek.course.id}) }}">
+        <button class="btn btn-primary mb-3">Enroll</button>
+        </form>
+        {% endif %}
+
+        {% else %}
+            <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
+                <div class="col-md-6 px-0">
+                    <p class="lead my-3">You haven't enrolled as a student, click the link below to start.</p>
+                    <p class="lead mb-0"><a href="{{ path('app_student_enroll') }}" class="text-white fw-bold">Enroll</a></p>
+                </div>
+            </div>
+        {% endif %}
+        <!--<div class="p-4 p-md-5 mb-4 text-white rounded bg-white"></div>-->
+
+
+    </main>
+
+{% endblock %}

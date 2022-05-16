@@ -1,0 +1,40 @@
+{% extends 'learning/index.html.twig' %}
+
+{% block title %}Hello StudentController!{% endblock %}
+
+
+{% block body %}
+    {{ include('learning/header.html.twig') }}
+    <main class="container">
+        {% if app.user.student %}
+            <h2> Courses</h2>
+            <div class="list-group">
+                {% for course in courses %}
+                <a href="{{ path('app_student_course', {course: course.id}) }}" class="list-group-item list-group-item-action" aria-current="true">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ course.title }}</h5>
+                        <small>{{ course.CourseHead.user.FirstName }} {{ course.CourseHead.user.LastName }}</small>
+                    </div>
+                    <p class="mb-1">Department of {{ course.department.name }}</p>
+                    <small>{{ course.assignments| length }} Assignments!</small>
+                </a>
+                {% else %}
+                    <div class="col-md-6 px-0">
+                        <p class="lead my-3">No Courses Found!</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
+                <div class="col-md-6 px-0">
+                    <p class="lead my-3">You haven't enrolled as a student, click the link below to start.</p>
+                    <p class="lead mb-0"><a href="{{ path('app_student_enroll') }}" class="text-white fw-bold">Enroll</a></p>
+                </div>
+            </div>
+        {% endif %}
+        <!--<div class="p-4 p-md-5 mb-4 text-white rounded bg-white"></div>-->
+
+
+    </main>
+
+{% endblock %}

@@ -37,6 +37,13 @@ class Course
     #[ORM\OneToMany(mappedBy: 'Course', targetEntity: Assignment::class)]
     private $assignments;
 
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $description;
+
+    #[ORM\OneToMany(mappedBy: 'course', targetEntity: CourseWeek::class)]
+    private $courseWeeks;
+
+
 
     public function __construct()
     {
@@ -44,6 +51,7 @@ class Course
         $this->Students = new ArrayCollection();
         $this->schedules = new ArrayCollection();
         $this->assignments = new ArrayCollection();
+        $this->courseWeeks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -194,4 +202,48 @@ class Course
 
         return $this;
     }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CourseWeek>
+     */
+    public function getCourseWeeks(): Collection
+    {
+        return $this->courseWeeks;
+    }
+
+    public function addCourseWeek(CourseWeek $courseWeek): self
+    {
+        if (!$this->courseWeeks->contains($courseWeek)) {
+            $this->courseWeeks[] = $courseWeek;
+            $courseWeek->setCourse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCourseWeek(CourseWeek $courseWeek): self
+    {
+        if ($this->courseWeeks->removeElement($courseWeek)) {
+            // set the owning side to null (unless already changed)
+            if ($courseWeek->getCourse() === $this) {
+                $courseWeek->setCourse(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }

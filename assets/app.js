@@ -12,5 +12,7 @@ import 'jquery/src/jquery';
 
 // start the Stimulus application
 import * as bootstrap from 'bootstrap';
+import videojs from 'video.js';
 require('@fortawesome/fontawesome-free/css/all.min.css');
 require('@fortawesome/fontawesome-free/js/all.js');
+require('!style-loader!css-loader!video.js/dist/video-js.css')

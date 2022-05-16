@@ -1,0 +1,102 @@
+{% extends 'learning/index.html.twig' %}
+
+{% block title %}Hello StudentController!{% endblock %}
+
+
+{% block body %}
+    {{ include('learning/header.html.twig') }}
+    <main class="container">
+        {% if app.user.student %}
+            <h2> {{ course.title }}</h2>
+            <div class="list-group">
+                <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
+                    <div class="col-md-6 px-0">
+                        <h1 class="display-4 fst-italic">Information</h1>
+                        <p class="lead my-3">{{ course.description }}</p>
+                      </div>
+                </div>
+            </div>
+            {% if enrolled %}
+                <div>
+                    <h3>Outline</h3>
+                    <div class="accordion" id="accordionExample">
+                        {% for week in course.courseweeks %}
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingweeky{{ week.id }}">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseweeky{{ week.id }}" aria-expanded="true" aria-controls="collapseweeky{{ week.id }}">
+                                        Week {{ week.cardinality}}
+                                    </button>
+                                </h2>
+                                <div id="collapseweeky{{ week.id }}" class="accordion-collapse collapse show" aria-labelledby="headingweeky{{ week.id }}" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <div class="accordion" id="accordionlecture{{ week.id }}">
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="headinglecturepanel{{ week.id }}">
+                                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapselecturepanel{{ week.id }}" aria-expanded="true" aria-controls="collapselecturepanel{{ week.id }}">
+                                                        Lectures
+                                                    </button>
+                                                </h2>
+                                                <div id="collapselecturepanel{{ week.id }}" class="accordion-collapse collapse show" aria-labelledby="headinglecturepanel{{ week.id }}" data-bs-parent="#accordionlecture{{ week.id }}">
+                                                    <div class="accordion-body">
+                                                        <ol class="list-group ">
+                                                            {% for lecture in week.lectures %}
+                                                                <a href="{{ path('app_student_lecture', {lecture: lecture.id}) }}" class="list-group-item d-flex justify-content-between align-items-start">
+                                                                    <div class="ms-2 me-auto">
+                                                                        <div class="fw-bold">{{ lecture.title }}</div>
+                                                                    </div>
+                                                                </a>
+                                                            {% endfor %}
+                                                        </ol>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="accordion" id="accordionassignment{{ week.id }}">
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="headingassignmentpanel{{ week.id }}">
+                                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseassignmentpanel{{ week.id }}" aria-expanded="true" aria-controls="collapseassignmentpanel{{ week.id }}">
+                                                        Assignments
+                                                    </button>
+                                                </h2>
+                                                <div id="collapseassignmentpanel{{ week.id }}" class="accordion-collapse collapse show" aria-labelledby="headingassignmentpanel{{ week.id }}" data-bs-parent="#accordionassignment{{ week.id }}">
+                                                    <div class="accordion-body">
+                                                        <ol class="list-group ">
+                                                            {% for assignment in week.Assignments %}
+                                                                <a href="{{ path('app_student_assignment', {assignment: assignment.id}) }}" class="list-group-item d-flex justify-content-between align-items-start">
+                                                                    <div class="ms-2 me-auto">
+                                                                        <div class="fw-bold">{{ assignment.title }}</div>
+                                                                    </div>
+                                                                </a>
+                                                            {% endfor %}
+                                                        </ol>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% else %}
+                <form method="post" action="{{ path('app_student_course_enroll', {course: course.id}) }}">
+                <button class="btn btn-primary mb-3">Enroll</button>
+
+            {% endif %}
+
+
+        {% else %}
+            <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
+                <div class="col-md-6 px-0">
+                    <p class="lead my-3">You haven't enrolled as a student, click the link below to start.</p>
+                    <p class="lead mb-0"><a href="{{ path('app_student_enroll') }}" class="text-white fw-bold">Enroll</a></p>
+                </div>
+            </div>
+        {% endif %}
+        <!--<div class="p-4 p-md-5 mb-4 text-white rounded bg-white"></div>-->
+
+
+    </main>
+
+{% endblock %}

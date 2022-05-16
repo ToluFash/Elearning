@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Course;
+use App\Entity\Student;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Psr\Log\LoggerInterface;
 
 /**
  * @extends ServiceEntityRepository<Course>
@@ -16,9 +18,11 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CourseRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private LoggerInterface $logger;
+    public function __construct(ManagerRegistry $registry, LoggerInterface $logger)
     {
         parent::__construct($registry, Course::class);
+        $this->logger = $logger;
     }
 
     public function add(Course $entity, bool $flush = false): void
@@ -37,6 +41,37 @@ class CourseRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+    public function studentEnrolled(Course $course, Student $student): bool{
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "
+            SELECT * FROM course_student
+            WHERE course_id=:cid AND student_id=:sid;
+            ";
+
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery([':cid' => $course->getId(), ':sid' => $student->getId()])->fetchAllKeyValue();
+        return count($resultSet);
+    }
+
+    public function findCourses(string $searchTerm): array
+    {
+
+        if($searchTerm){
+            $conn = $this->getEntityManager()->getConnection();
+            $sql = "
+            SELECT * FROM course
+            WHERE MATCH(title) AGAINST (:searchTerm IN BOOLEAN MODE);
+            ";
+
+            $stmt = $conn->prepare($sql);
+            $resultSet = $stmt->executeQuery([':searchTerm' => '+'.$searchTerm.'*'])->fetchAllKeyValue();
+            return $this->findBy(['id'=> $resultSet]);
+        }
+        else{
+            return $this->findAll();
+        }
+
     }
 
 //    /**

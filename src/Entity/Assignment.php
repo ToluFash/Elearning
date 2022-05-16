@@ -19,13 +19,22 @@ class Assignment
     private $Title;
 
     #[ORM\ManyToOne(targetEntity: Course::class, inversedBy: 'assignments')]
-    private $Course;
+    private ?Course $Course;
 
-    #[ORM\ManyToOne(targetEntity: Instructor::class, inversedBy: 'yes')]
+    #[ORM\ManyToOne(targetEntity: Instructor::class, inversedBy: 'assignments')]
     private $Instructor;
 
     #[ORM\OneToMany(mappedBy: 'Assignment', targetEntity: Submission::class)]
     private $submissions;
+
+    #[ORM\ManyToOne(targetEntity: CourseWeek::class, inversedBy: 'Assignments')]
+    private $courseWeek;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $description;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $file;
 
     public function __construct()
     {
@@ -102,4 +111,42 @@ class Assignment
 
         return $this;
     }
+
+    public function getCourseWeek(): ?CourseWeek
+    {
+        return $this->courseWeek;
+    }
+
+    public function setCourseWeek(?CourseWeek $courseWeek): self
+    {
+        $this->courseWeek = $courseWeek;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getFile(): ?string
+    {
+        return $this->file;
+    }
+
+    public function setFile(?string $file): self
+    {
+        $this->file = $file;
+
+        return $this;
+    }
+
+
 }

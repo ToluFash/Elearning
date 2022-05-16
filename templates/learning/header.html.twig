@@ -1,6 +1,6 @@
 {% block header %}
     <div class="container">
-        <header class="blog-header lh-1 py-3  rounded bg-dark pl-5 pr-5">
+        <header class="blog-header lh-1 py-3 px-3  rounded bg-dark pl-5 pr-5">
             <div class="row flex-nowrap justify-content-between align-items-center">
                 <div class="col-4 pt-1 ">
                     <a class="text-white" href="#">Hello, {{ app.user.lastname}}</a>
@@ -21,10 +21,10 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Courses</a>
+                                <a class="nav-link active" aria-current="page" href="{{ path('app_student_courses')}}">Courses</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Assignments</a>
+                                <a class="nav-link active" aria-current="page" href="{{ path('app_student_assignments')}}">Assignments</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -36,8 +36,8 @@
                                 </ul>
                             </li>
                         </ul>
-                        <form class="d-flex position-relative " role="search">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <form class="d-flex position-relative " role="search" method="post" action="{{ path('app_student_courses_search') }}">
+                            <input class="form-control me-2" name= 'searchTerm' type="search" placeholder="Search" aria-label="Search">
                             <button class="btn btn-outline-success" type="submit">Search</button>
                         </form>
                     </div>

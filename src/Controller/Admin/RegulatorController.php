@@ -2,9 +2,13 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Assignment;
+use App\Entity\Course;
+use App\Entity\CourseWeek;
 use App\Entity\Department;
 use App\Entity\Faculty;
 use App\Entity\Instructor;
+use App\Entity\Lecture;
 use App\Entity\Student;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -51,6 +55,12 @@ class RegulatorController extends AbstractDashboardController
             MenuItem::section('School'),
             MenuItem::linkToCrud('Faculties', 'fa fa-building', Faculty::class),
             MenuItem::linkToCrud('Departments', 'fa fa-building', Department::class),
+            MenuItem::linkToCrud('Courses', 'fa fa-building', Course::class),
+
+            MenuItem::section('Course'),
+            MenuItem::linkToCrud('CourseWeek', 'fa fa-building', CourseWeek::class),
+            MenuItem::linkToCrud('Lecture', 'fa fa-building', Lecture::class),
+            MenuItem::linkToCrud('Assignment', 'fa fa-building', Assignment::class),
 
             MenuItem::section('Users'),
             MenuItem::linkToCrud('Users', 'fa fa-user', User::class),

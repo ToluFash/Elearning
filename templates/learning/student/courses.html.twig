@@ -7,99 +7,22 @@
     {{ include('learning/header.html.twig') }}
     <main class="container">
         {% if app.user.student %}
-
-            <div class="row mb-2">
-                <div class="col-md-6">
-                    <h3 class="mb-0">Courses</h3>
-                    {% if app.user.student.courses|length > 0 %}
-                        <ol class="list-group list-group-numbered">
-                            <li class="list-group-item d-flex justify-content-between align-items-start">
-                                <div class="ms-2 me-auto">
-                                    <div class="fw-bold">Subheading</div>
-                                    Content for list item
-                                </div>
-                                <span class="badge bg-primary rounded-pill">14</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-start">
-                                <div class="ms-2 me-auto">
-                                    <div class="fw-bold">Subheading</div>
-                                    Content for list item
-                                </div>
-                                <span class="badge bg-primary rounded-pill">14</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-start">
-                                <div class="ms-2 me-auto">
-                                    <div class="fw-bold">Subheading</div>
-                                    Content for list item
-                                </div>
-                                <span class="badge bg-primary rounded-pill">14</span>
-                            </li>
-                        </ol>
-                    {% else %}
-                        <h5 class="card-title">No Courses Registered!</h5>
-                        <p class="lead mb-0"><a href="{{ path('app_student_courses') }}" class="text-black fw-bold">Enroll in a Course</a></p>
-                    {% endif %}
-                </div>
-                <div class="col-md-6">
-                    <h3 class="mb-0">Assignments</h3>
-                    {% if assignments|length > 0 %}
-                        <ol class="list-group list-group-numbered">
-                            <li class="list-group-item d-flex justify-content-between align-items-start">
-                                <div class="ms-2 me-auto">
-                                    <div class="fw-bold">Subheading</div>
-                                    Content for list item
-                                </div>
-                                <span class="badge bg-primary rounded-pill">14</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-start">
-                                <div class="ms-2 me-auto">
-                                    <div class="fw-bold">Subheading</div>
-                                    Content for list item
-                                </div>
-                                <span class="badge bg-primary rounded-pill">14</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-start">
-                                <div class="ms-2 me-auto">
-                                    <div class="fw-bold">Subheading</div>
-                                    Content for list item
-                                </div>
-                                <span class="badge bg-primary rounded-pill">14</span>
-                            </li>
-                        </ol>
-                    {% else %}
-                        <h5 class="card-title">No Pending Assignments!</h5>
-                    {% endif %}
-
-                </div>
-            </div>
-            <div class="row mb-2">
-                <div class="col-md-12">
-                    <h5 class="card-title">No Pending Notifications!</h5>
-                    <h3 class="mb-0">Notifications</h3>
-                    <ol class="list-group list-group-numbered">
-                        <li class="list-group-item d-flex justify-content-between align-items-start">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Subheading</div>
-                                Content for list item
-                            </div>
-                            <span class="badge bg-primary rounded-pill">14</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-start">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Subheading</div>
-                                Content for list item
-                            </div>
-                            <span class="badge bg-primary rounded-pill">14</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-start">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-bold">Subheading</div>
-                                Content for list item
-                            </div>
-                            <span class="badge bg-primary rounded-pill">14</span>
-                        </li>
-                    </ol>
-                </div>
+            <h2> My Courses</h2>
+            <div class="list-group">
+                {% for course in app.user.student.courses %}
+                <a href="{{ path('app_student_course', {course: course.id}) }}" class="list-group-item list-group-item-action" aria-current="true">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ course.title }}</h5>
+                        <small>Professor  {{ course.CourseHead.user.lastName }}</small>
+                    </div>
+                    <p class="mb-1">Department of {{ course.department.name }}</p>
+                    <small>{{ course.assignments| length }} Assignments!</small>
+                </a>
+                {% else %}
+                    <div class="col-md-6 px-0">
+                        <p class="lead my-3">You haven't enrolled in any course. search and enroll for courses!</p>
+                    </div>
+                {% endfor %}
             </div>
         {% else %}
             <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">

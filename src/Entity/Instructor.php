@@ -31,13 +31,17 @@ class Instructor
     private $department;
 
     #[ORM\OneToMany(mappedBy: 'Instructor', targetEntity: Assignment::class)]
-    private $yes;
+    private $assignments;
+
+    #[ORM\ManyToMany(targetEntity: Lecture::class, mappedBy: 'Instructors')]
+    private $lectures;
 
     public function __construct()
     {
         $this->courses = new ArrayCollection();
         $this->mycourses = new ArrayCollection();
-        $this->yes = new ArrayCollection();
+        $this->assignments = new ArrayCollection();
+        $this->lectures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -151,28 +155,55 @@ class Instructor
     /**
      * @return Collection<int, Assignment>
      */
-    public function getYes(): Collection
+    public function getAssignments(): Collection
     {
-        return $this->yes;
+        return $this->assignments;
     }
 
-    public function addYe(Assignment $ye): self
+    public function addAssignment(Assignment $assignment): self
     {
-        if (!$this->yes->contains($ye)) {
-            $this->yes[] = $ye;
-            $ye->setInstructor($this);
+        if (!$this->assignments->contains($assignment)) {
+            $this->assignments[] = $assignment;
+            $assignment->setInstructor($this);
         }
 
         return $this;
     }
 
-    public function removeYe(Assignment $ye): self
+    public function removeAssignment(Assignment $assignment): self
     {
-        if ($this->yes->removeElement($ye)) {
+        if ($this->assignments->removeElement($assignment)) {
             // set the owning side to null (unless already changed)
-            if ($ye->getInstructor() === $this) {
-                $ye->setInstructor(null);
+            if ($assignment->getInstructor() === $this) {
+                $assignment->setInstructor(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Lecture>
+     */
+    public function getLectures(): Collection
+    {
+        return $this->lectures;
+    }
+
+    public function addLecture(Lecture $lecture): self
+    {
+        if (!$this->lectures->contains($lecture)) {
+            $this->lectures[] = $lecture;
+            $lecture->addInstructor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLecture(Lecture $lecture): self
+    {
+        if ($this->lectures->removeElement($lecture)) {
+            $lecture->removeInstructor($this);
         }
 
         return $this;
