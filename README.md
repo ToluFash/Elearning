@@ -24,4 +24,3 @@ Educational management system.
 1. Register a user at `/register`
 1. Populate entities at `/admin`
 1. Access Student portal at  `/student`
-run -u root --rm php-fpm bash "-c" "cd /var/www/html && ./bin/console doctrine:migrations:diff --em=members --configuration=./bin/doctrine-members.yaml"` 
